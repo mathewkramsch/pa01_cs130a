@@ -6,12 +6,6 @@
 #include <vector>
 #include "string"
 
-// EXCEPTION CLASSES
-class noInput { public: void mssg(); };
-class invalidOperator { public: void mssg(); };
-class invalidPolynomial { public: void mssg(); };
-class invalidOperation {public: void mssg(); };
-
 // MAIN HELPER FUNCTIONS
 char get_operation(std::string input);
 std::pair<std::vector<int>,std::vector<int>> vectorize_input(std::string input);

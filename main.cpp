@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "mainFuncs.h"
+#include "exceptions.h"
 #include "array.h"
 using namespace std;
 
@@ -20,33 +21,31 @@ int main(int argc, char *argv[]) {  // argc = # inputs, argv[] = cstring of inpu
 
 
 
-		array_poly a2(vect_polys.second);
-
-		print_vector(vect_polys.first,1);
-		a1.print(1);
-
-		print_vector(vect_polys.second,2);
-		a2.print(2);
-
+		// array_poly a2(vect_polys.second);
+// 
+		// print_vector(vect_polys.first,1);
+		// a1.print(1);
+// 
+		// print_vector(vect_polys.second,2);
+		// a2.print(2);
+// 
  
-		// if (operation=='+') {
-			// array_poly a2(vect_polys.second);  // make 2nd polynomial's array_poly object
-			// a3 = a1.addPoly(a2);
-		// } else if (operation=='*') {
-			// array_poly a2(vect_polys.second);  // make 2nd polynomial's array_poly object
-			// a3 = a1.mulPoly(a2);
-		// } else if (operation=='^') a3 = a1.squPoly();
+		if (operation=='+') {
+			array_poly a2(vect_polys.second);  // make 2nd polynomial's array_poly object
+			a3 = a1.addPoly(a2);
+		} else if (operation=='*') {
+			array_poly a2(vect_polys.second);  // make 2nd polynomial's array_poly object
+			a3 = a1.mulPoly(a2);
+		} else if (operation=='^') a3 = a1.squPoly();
 
-		// cout << a3.writePoly() << endl;
-		// a3.print(3);
-
-
-
+		cout << a3.writePoly() << endl;
+		a3.print(3);
 
 	} catch (noInput e) { e.mssg();
 	} catch (invalidOperator e) { e.mssg(); 
 	} catch (invalidPolynomial e) { e.mssg();
 	} catch (invalidOperation e) { e.mssg();
+	} catch (outOfOrderPoly e) { e.mssg();
 	}
 
 	return 0;

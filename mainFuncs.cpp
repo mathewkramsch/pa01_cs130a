@@ -1,17 +1,9 @@
 // mainFuncs.cpp
 
 #include "mainFuncs.h"
+#include "exceptions.h"
 #include <iostream>
 using namespace std;
-
-
-// -----------------------------------------------------------------
-// EXCEPTIONS:
-void noInput::mssg() { cout << "No Input. Ex: ./array.out \"6 8 + 9 0\"" << endl; }
-void invalidOperator::mssg() { cout << "Invalid operator. Operators include: *, +, or **" << endl; }
-void invalidPolynomial::mssg() { cout << "Invalid polynomial. Ex: 5 0 6 7 = 5x^0 + 6x^7" << endl; }
-void invalidOperation::mssg() { cout << "Invalid Operation. Ex: 6 7 * 8 3" << endl; }
-
 
 // -----------------------------------------------------------------
 // MAIN HELPER FUNCTIONS
@@ -40,7 +32,7 @@ pair<int,int> read_number(string input, int i) {
 	string num="";
 	pair<int,int> p;
 	int j=i;
-	while (input[j]!=' ')
+	while (input[j]!=' ' && j<input.length())
 		num += input[j++];
 	p.first = stoi(num);
 	p.second = j;

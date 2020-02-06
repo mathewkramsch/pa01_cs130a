@@ -10,6 +10,7 @@ class array_poly {
 		// CONSTRUCTORS
 		array_poly();
 		array_poly(std::vector<int> vect_poly);  // uses readPoly() to turn string polynomial into array polynomial
+		array_poly(int size1, int *arr);
 		array_poly& operator =(const array_poly &right);
 
 		// GETTERS
