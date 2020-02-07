@@ -142,7 +142,6 @@ array_poly array_poly::mulPoly(array_poly other) {
 // POSTCONDITION: returns an array_poly object that is = this array_poly * other
 
 	int size3 = size + other.getSize();  // size3 will be sum of largest degrees of each polynomial
-	size3 = size3%10000;  // all exponents = mod 10^4
 	int *arr3 = new int[size3]{0};
 
 	int coef1(0), exp1(0);  // coefficient/exponent from this arr_poly
@@ -157,8 +156,9 @@ array_poly array_poly::mulPoly(array_poly other) {
 				if (other.getArray()[j]!=0) {
 					coef2 = other.getArray()[j];
 					exp2 = j;
-					exp3 = (exp1+exp2)%10000;  // exponents = mod 10^4
+
 					coef3 = (coef1*coef2)%1000000;  // coefficients = mod 10^6
+					exp3 = (exp1+exp2)%10000;  // exponents = mod 10^4
 					arr3[exp3] += coef3;
 				}
 			}
@@ -172,7 +172,7 @@ array_poly array_poly::squPoly() {
 // PRECONDITION: other is an array_poly object in reduced form
 // POSTCONDITION: returns an array_poly object that is = this array_poly^2
 
-	return *this;
+	return this->mulPoly(*this);
 }
 
 // -----------------------------------------------------------------

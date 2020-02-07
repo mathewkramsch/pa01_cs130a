@@ -20,11 +20,6 @@ int main(int argc, char *argv[]) {  // argc = # inputs, argv[] = cstring of inpu
 		str_polys = parse_input(argv[1]);  // split input into pair of strings for each polynomial
 		array_poly a1(str_polys.first);  // make array_poly object for 1st polynomial
 
-		// DEBUGGING: 
-		// array_poly a2(str_polys.second);  // dont need to make if square operation
-		// a1.print(1);
-		// a2.print(2);	
-
 		// ADD/MULTIPLY/SQUARE OPERATIONS:
 		array_poly a3;
 		if (operation=='+') {
