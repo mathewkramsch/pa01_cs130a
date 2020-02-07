@@ -9,7 +9,8 @@ class array_poly {
 	public:
 		// CONSTRUCTORS
 		array_poly();
-		array_poly(std::vector<int> vect_poly);  // uses readPoly() to turn string polynomial into array polynomial
+		array_poly(std::string str_poly);
+			// array_poly(std::vector<int> vect_poly);  // uses readPoly() to turn string polynomial into array polynomial
 		array_poly(int size1, int *arr);
 		array_poly& operator =(const array_poly &right);
 
@@ -31,7 +32,9 @@ class array_poly {
 		int* arr_poly;  // array to represent input polynomial
 
 		// HELPER FUNCTIONS
-		void readPoly(std::vector<int> vect_poly);  // translates string polynomial to array representation of polynomial
+		void readPoly(std::string str_poly);
+		std::pair<int,int> readNumber(std::string input, int i);  // helper function for readPoly
+			// void readPoly(std::vector<int> vect_poly);  // translates string polynomial to array representation of polynomial
 };
 
 #endif

@@ -11,11 +11,32 @@ using namespace std;
 
 array_poly::array_poly(): size(-1), arr_poly(nullptr) {}
 
-array_poly::array_poly(vector<int> vect_poly):
-	size(vect_poly[vect_poly.size()-1]+1) {  // make size of array_poly 1 more than highest degree of polynomial
-		// max degree = last index of vect_poly
+// array_poly::array_poly(vector<int> vect_poly):
+	// size(vect_poly[vect_poly.size()-1]+1) {  // make size of array_poly 1 more than highest degree of polynomial
+		// // max degree = last index of vect_poly
+	// arr_poly = new int[size]{0};  // make array all zeros w/ correct size
+	// this->readPoly(vect_poly);  // translates input vector to polynomial array
+// }
+
+array_poly::array_poly(string str_poly) {  
+
+
+
+	// make size of arrary =  highest degree of polynomial + 1 (so max degree exponenet will be indexable)
+	string num="";
+	int index_of_largest_exp;  // index of largest exponent = last index of str_poly that is not ' '
+	for (int i=str_poly.length()-1; str_poly[i]!=' '; i--)
+		index_of_largest_exp=i;
+	for (int i=index_of_largest_exp; i<str_poly.length(); i++)
+		num += str_poly[i];
+	if (num=="") {
+		size=0;
+		return;
+	}
+	else size = stoi(num) + 1;
+
 	arr_poly = new int[size]{0};  // make array all zeros w/ correct size
-	this->readPoly(vect_poly);  // translates input vector to polynomial array
+	this->readPoly(str_poly);  // translates input vector to polynomial array
 }
 
 array_poly::array_poly(int size1, int *arr): size(size1), arr_poly(arr) {}
@@ -46,12 +67,57 @@ string array_poly::writePoly() {
 
 // translates vect_poly (command-line input in vector form) -> array rep. of polynomial
 // adds coefficients to index of array that matches their respective degrees
-void array_poly::readPoly(vector<int> vect_poly) {
-	for (int i=0; i<vect_poly.size(); i+=2) {
-		if (vect_poly[i+1]>size) throw outOfOrderPoly();
-		arr_poly[vect_poly[i+1]] += vect_poly[i];  // adds terms together w/ same exponents
-	}
+// void array_poly::readPoly(vector<int> vect_poly) {
+	// for (int i=0; i<vect_poly.size(); i+=2) {
+		// if (vect_poly[i+1]>size) throw outOfOrderPoly();
+		// arr_poly[vect_poly[i+1]] += vect_poly[i];  // adds terms together w/ same exponents
+	// }
+// }
+
+
+// helper function for vectorize_input
+pair<int,int> array_poly::readNumber(string input, int i) {
+	// PRECONDITION: input is str_poly and i is index of input to start on
+	// POSTCONDITION: returns pair w/ info
+		// first: the number to input into array
+		// second: the index of next character to read in str_poly (after number)
+
+	string num="";
+	pair<int,int> p;
+	int j=i;
+	while (input[j]!=' ' && j<input.length())
+		num += input[j++];
+	p.first = stoi(num);
+	p.second = j;
+	return p;
 }
+
+// translates vect_poly (command-line input in vector form) -> array rep. of polynomial
+// adds coefficients to index of array that matches their respective degrees
+void array_poly::readPoly(std::string str_poly) {
+	int i=0;
+	bool read_coefficient_next=true;
+	int coefficient(0), exponent(0);
+	while (i<str_poly.length()) {
+		if (str_poly[i]!=' ') {
+			pair<int,int> p=readNumber(str_poly,i);
+			i=p.second;  // p.second = index of next char to read in str_poly
+			if (read_coefficient_next) {
+				coefficient = p.first;
+				read_coefficient_next=false;
+			}
+			else {
+				exponent = p.first;
+				if (i<str_poly.length()-1 && exponent>size) throw outOfOrderPoly();
+				arr_poly[exponent] = coefficient;
+				read_coefficient_next=true;
+			}
+		} else i++;
+	}
+	if (!read_coefficient_next) throw invalidPolynomial();  
+		// this means coefficient was last term (each coefficient inputted must have a exponent)
+}
+
 
 array_poly array_poly::addPoly(array_poly other) {
 	int size3;
