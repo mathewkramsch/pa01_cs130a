@@ -159,7 +159,7 @@ array_poly array_poly::mulPoly(array_poly other) {
 					exp2 = j;
 					exp3 = (exp1+exp2)%10000;  // exponents = mod 10^4
 					coef3 = (coef1*coef2)%1000000;  // coefficients = mod 10^6
-					arr3[exp3] = coef3;
+					arr3[exp3] += coef3;
 				}
 			}
 		}
