@@ -30,7 +30,7 @@ class array_poly {
 		int* arr_poly;  // array to represent input polynomial, arr_poly[exponent] = coefficient
 
 		// HELPER FUNCTIONS
-		void readPoly(std::string str_poly);  // translates str_poly string to arr_poly
+		void readPoly(std::string str_poly);  // translates str_poly string to arr_poly, helper for constructor
 		std::pair<int,int> readNumber(std::string input, int i);  // helper function for readPoly
 };
 
