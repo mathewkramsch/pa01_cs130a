@@ -1,9 +1,9 @@
 // main.cpp
 
 #include <iostream>
-#include "mainFuncs.h"
-#include "exceptions.h"
-#include "array.h"
+#include "../mainFuncs.h"
+#include "../exceptions.h"
+#include "ll.h"
 using namespace std;
 
 int main(int argc, char *argv[]) {  // argc = # inputs, argv[] = cstring of inputs
@@ -18,26 +18,25 @@ int main(int argc, char *argv[]) {  // argc = # inputs, argv[] = cstring of inpu
 		// GET INPUT
 		operation = get_operation(argv[1]);  // find out which operation to perform
 		str_polys = parse_input(argv[1]);  // split input into pair of strings for each polynomial
-		array_poly a1(str_polys.first);  // make array_poly object for 1st polynomial
+		linkedlist_poly lp1(str_polys.first);  // make linkedlist_poly object for 1st polynomial
+		cout << "lp1: " << lp1.writePoly() << endl;
 
 		// ADD/MULTIPLY/SQUARE OPERATIONS:
-		array_poly a3;
+		linkedlist_poly lp3;
 		if (operation=='+') {
-			array_poly a2(str_polys.second);  // make 2nd polynomial's array_poly object
-			a3 = a1.addPoly(a2);
+			linkedlist_poly lp2(str_polys.second);  // make 2nd polynomial's linkedlist_poly object
+			cout << "lp2: " << lp2.writePoly() << endl;
+			lp3 = lp1.addPoly(lp2);  // calls destructor for lp2?
 		} else if (operation=='*') {
-			array_poly a2(str_polys.second);  // make 2nd polynomial's array_poly object
-			a3 = a1.mulPoly(a2);
-		} else if (operation=='^') a3 = a1.squPoly();
+			linkedlist_poly lp2(str_polys.second);  // make 2nd polynomial's linkedlist_poly object
+			lp3 = lp1.mulPoly(lp2);
+		} else if (operation=='^') lp3 = lp1.squPoly();
 
 		// OUTPUT:
-		cout << a3.writePoly() << endl;
-
-		// DEBUGGING:
-		// a3.print(3);
+		cout << lp3.writePoly() << endl;
 
 	} catch (noInput e) { e.mssg();
-	} catch (invalidOperator e) { e.mssg(); 
+	} catch (invalidOperator e) { e.mssg();
 	} catch (invalidPolynomial e) { e.mssg();
 	} catch (invalidOperation e) { e.mssg();
 	} catch (outOfOrderPoly e) { e.mssg();

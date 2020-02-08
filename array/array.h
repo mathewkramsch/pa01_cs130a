@@ -1,4 +1,5 @@
 // array.h
+// array representation of a sparse polynomial
 
 #ifndef ARRAY_H
 #define ARRAY_H
@@ -6,11 +7,12 @@
 
 class array_poly {
 	public:
-		// CONSTRUCTORS
+		// CONSTRUCTORS/DESTRUCTOR
 		array_poly();
 		array_poly(std::string str_poly);
 		array_poly(int size1, int *arr);
 		array_poly& operator =(const array_poly &right);
+		~array_poly();
 
 		// GETTERS
 		int getSize() const { return size; }
@@ -18,8 +20,8 @@ class array_poly {
 
 		// PUBLIC METHODS
 		std::string writePoly();  // array polynomial -> string representation
-		array_poly addPoly(array_poly other);  // adds this poly w/ other -> = 3rd poly
-		array_poly mulPoly(array_poly other);  // multiplies this poly w/ other -> = 3rd poly
+		array_poly addPoly(array_poly const &other);  // adds this poly w/ other -> = 3rd poly
+		array_poly mulPoly(array_poly const &other);  // multiplies this poly w/ other -> = 3rd poly
 		array_poly squPoly();  // squares this poly -> = 3rd poly
 
 		// temporary method for debugging:

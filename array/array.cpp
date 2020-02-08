@@ -1,13 +1,12 @@
 // array.cpp
-// implements array_poly + has main function to take input and do shit
 
-#include <iostream>
 #include "array.h"
-#include "exceptions.h"
+#include "../exceptions.h"
+#include <iostream>
 using namespace std;
 
 // -----------------------------------------------------------------
-// CONSTRUCTORS
+// CONSTRUCTORS/DESTRUCTOR
 
 array_poly::array_poly(): size(-1), arr_poly(nullptr) {}
 // POSTCONDITION: size = -1, arr_poly is a nullptr (so can make array_poly object w/o arguments)
@@ -38,8 +37,13 @@ array_poly::array_poly(string str_poly) {
 }
 
 array_poly::array_poly(int size1, int *arr): size(size1), arr_poly(arr) {}
+// PRECONDITION: size1 = size of arr, arr = a pointer to an array on the heap representing a polynomial
+// POSTCONDITION: creates an array_poly object from arr
 
 array_poly& array_poly::operator =(const array_poly &right) {
+// PRECONDITION: right = an array_poly object that is not empty
+// POSTCONDITION: creates a duplicate array_poly object from right
+
 	if (this==&right) return *this;
 	if (size>0) delete [] arr_poly;
 	size = right.getSize();
@@ -48,7 +52,12 @@ array_poly& array_poly::operator =(const array_poly &right) {
 		*(arr_poly + i) = *(right.getArray() + i);
 	return *this;
 }
-	
+
+array_poly::~array_poly() {
+// POSTCONDITION: all memory on heap is freed
+	delete [] arr_poly;
+}
+
 // -----------------------------------------------------------------
 // READ/WRITE METHODS
 
@@ -81,7 +90,7 @@ pair<int,int> array_poly::readNumber(string input, int i) {
 	return p;
 }
 
-void array_poly::readPoly(std::string str_poly) {
+void array_poly::readPoly(string str_poly) {
 // PRECONDITION: str_poly is from parse_input, contains one polynomial in string form w/o operators
 // POSTCONDITION: translates str_poly -> array rep. of polynomial, writes to arr_poly
 	// aka: adds coefficients to index of array that matches their respective degrees
@@ -112,7 +121,7 @@ void array_poly::readPoly(std::string str_poly) {
 // -----------------------------------------------------------------
 // OPERATION METHODS
 
-array_poly array_poly::addPoly(array_poly other) {
+array_poly array_poly::addPoly(array_poly const &other) {
 // PRECONDITION: other is an array_poly object in reduced form
 // POSTCONDITION: returns an array_poly object that is = this array_poly + other
 
@@ -137,7 +146,7 @@ array_poly array_poly::addPoly(array_poly other) {
 	return array_poly(size3,arr3);
 }
 
-array_poly array_poly::mulPoly(array_poly other) {
+array_poly array_poly::mulPoly(array_poly const &other) {
 // PRECONDITION: other is an array_poly object in reduced form
 // POSTCONDITION: returns an array_poly object that is = this array_poly * other
 
@@ -171,7 +180,6 @@ array_poly array_poly::mulPoly(array_poly other) {
 array_poly array_poly::squPoly() {
 // PRECONDITION: other is an array_poly object in reduced form
 // POSTCONDITION: returns an array_poly object that is = this array_poly^2
-
 	return this->mulPoly(*this);
 }
 
